@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorar Locais — Editor de Imagens</title>
+    <meta name="description" content="Editor de imagens para criação de publicações Explorar Locais para Facebook, Instagram e Google Maps">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <div class="header-left">
+                <div class="logo">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="7.5 4.21 12 6.81 16.5 4.21"/>
+                        <line x1="12" y1="22.08" x2="12" y2="6.81"/>
+                    </svg>
+                    <span>Explorar Locais <small>Editor</small></span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-width="1080" data-height="1080" id="preset-instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                        Instagram
+                    </button>
+                    <button class="preset-btn" data-width="1200" data-height="630" id="preset-facebook">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        Facebook
+                    </button>
+                    <button class="preset-btn" data-width="720" data-height="720" id="preset-gmaps">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Google Maps
+                    </button>
+                    <button class="preset-btn" data-width="1080" data-height="1920" id="preset-stories">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        Stories
+                    </button>
+                    <div class="custom-size">
+                        <input type="number" id="canvas-width" value="1080" min="100" max="8000">
+                        <span>×</span>
+                        <input type="number" id="canvas-height" value="1080" min="100" max="8000">
+                        <button id="apply-size" class="btn-apply">Aplicar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="btn-save-project" class="btn-save" title="Salvar projeto (Ctrl+S)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Salvar
+                </button>
+                <button id="btn-new-project" class="btn-new" title="Novo projeto">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </button>
+                <button id="btn-export" class="btn-export">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Exportar HD
+                </button>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <!-- Left Sidebar - Layers -->
+            <aside id="sidebar-left">
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h3>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Camadas
+                        </h3>
+                        <button id="btn-add-image" class="btn-icon" title="Adicionar imagem">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        </button>
+                    </div>
+                    <div id="layers-list" class="layers-list">
+                        <div class="empty-layers">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            <p>Arraste imagens aqui<br>ou clique em <strong>+</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h3>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            Ações Rápidas
+                        </h3>
+                    </div>
+                    <div class="quick-actions">
+                        <button id="btn-add-frame" class="quick-action-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+                            Adicionar Quadro
+                        </button>
+                        <button id="btn-fit-to-canvas" class="quick-action-btn" title="Ajusta a camada selecionada ao canvas">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                            Ajustar ao Canvas
+                        </button>
+                        <button id="btn-center" class="quick-action-btn" title="Centraliza a camada selecionada">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+                            Centralizar
+                        </button>
+                        <button id="btn-delete-layer" class="quick-action-btn danger" title="Deleta a camada selecionada">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Remover
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Canvas Area -->
+            <main id="canvas-area">
+                <div id="canvas-viewport">
+                    <div id="canvas-container">
+                        <canvas id="editor-canvas"></canvas>
+                        <!-- Transform handles overlay -->
+                        <div id="transform-overlay"></div>
+                    </div>
+                </div>
+                <div id="zoom-controls">
+                    <button id="zoom-out" class="zoom-btn" title="Diminuir zoom">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    </button>
+                    <span id="zoom-level">100%</span>
+                    <button id="zoom-in" class="zoom-btn" title="Aumentar zoom">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    </button>
+                    <button id="zoom-fit" class="zoom-btn" title="Ajustar à tela">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                    </button>
+                </div>
+                <!-- Drop overlay -->
+                <div id="drop-overlay" class="drop-overlay hidden">
+                    <div class="drop-content">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <h2>Solte as imagens aqui</h2>
+                        <p>PNG, JPG, WEBP suportados</p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar - Properties -->
+            <aside id="sidebar-right">
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h3>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                            Propriedades
+                        </h3>
+                    </div>
+                    <div id="properties-panel" class="properties-panel">
+                        <div class="no-selection">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+                                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                                <path d="M13 13l6 6"/>
+                            </svg>
+                            <p>Selecione uma camada<br>para editar propriedades</p>
+                        </div>
+                        <div id="props-content" class="props-content hidden">
+                            <div class="prop-group">
+                                <label>Posição</label>
+                                <div class="prop-row">
+                                    <div class="prop-field">
+                                        <span class="prop-label">X</span>
+                                        <input type="number" id="prop-x" step="1">
+                                    </div>
+                                    <div class="prop-field">
+                                        <span class="prop-label">Y</span>
+                                        <input type="number" id="prop-y" step="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-group">
+                                <label>Tamanho</label>
+                                <div class="prop-row">
+                                    <div class="prop-field">
+                                        <span class="prop-label">L</span>
+                                        <input type="number" id="prop-width" step="1" min="1">
+                                    </div>
+                                    <div class="prop-field">
+                                        <span class="prop-label">A</span>
+                                        <input type="number" id="prop-height" step="1" min="1">
+                                    </div>
+                                    <button id="prop-lock-ratio" class="btn-lock active" title="Manter proporção">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="prop-group">
+                                <label>Rotação</label>
+                                <div class="prop-row">
+                                    <input type="range" id="prop-rotation-slider" min="-180" max="180" value="0" step="1" class="slider">
+                                    <div class="prop-field small">
+                                        <input type="number" id="prop-rotation" min="-360" max="360" step="1" value="0">
+                                        <span class="prop-unit">°</span>
+                                    </div>
+                                </div>
+                                <div class="rotation-presets">
+                                    <button class="rot-preset" data-rot="0">0°</button>
+                                    <button class="rot-preset" data-rot="90">90°</button>
+                                    <button class="rot-preset" data-rot="180">180°</button>
+                                    <button class="rot-preset" data-rot="270">270°</button>
+                                </div>
+                            </div>
+                            <div class="prop-group">
+                                <label>Opacidade</label>
+                                <div class="prop-row">
+                                    <input type="range" id="prop-opacity-slider" min="0" max="100" value="100" step="1" class="slider">
+                                    <div class="prop-field small">
+                                        <input type="number" id="prop-opacity" min="0" max="100" step="1" value="100">
+                                        <span class="prop-unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-group">
+                                <label>Ordem</label>
+                                <div class="order-buttons">
+                                    <button id="btn-bring-front" class="order-btn" title="Trazer para frente">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+                                        Frente
+                                    </button>
+                                    <button id="btn-bring-up" class="order-btn" title="Subir uma camada">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                                        Subir
+                                    </button>
+                                    <button id="btn-send-down" class="order-btn" title="Descer uma camada">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                                        Descer
+                                    </button>
+                                    <button id="btn-send-back" class="order-btn" title="Enviar para trás">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+                                        Trás
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="prop-group">
+                                <label>Espelhar</label>
+                                <div class="flip-buttons">
+                                    <button id="btn-flip-h" class="order-btn" title="Espelhar horizontalmente">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M16 6l4 6-4 6M8 6L4 12l4 6"/></svg>
+                                        Horizontal
+                                    </button>
+                                    <button id="btn-flip-v" class="order-btn" title="Espelhar verticalmente">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(90)"><path d="M12 2v20M16 6l4 6-4 6M8 6L4 12l4 6"/></svg>
+                                        Vertical
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <h3>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Exportação
+                        </h3>
+                    </div>
+                    <div class="export-options">
+                        <div class="prop-group">
+                            <label>Formato</label>
+                            <select id="export-format">
+                                <option value="png">PNG (Sem perda)</option>
+                                <option value="jpeg">JPEG (Menor tamanho)</option>
+                                <option value="webp">WebP (Moderno)</option>
+                            </select>
+                        </div>
+                        <div class="prop-group" id="quality-group">
+                            <label>Qualidade</label>
+                            <div class="prop-row">
+                                <input type="range" id="export-quality-slider" min="10" max="100" value="100" step="5" class="slider">
+                                <div class="prop-field small">
+                                    <input type="number" id="export-quality" min="10" max="100" step="5" value="100">
+                                    <span class="prop-unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-group">
+                            <label>Escala</label>
+                            <select id="export-scale">
+                                <option value="1">1x (Original)</option>
+                                <option value="2">2x (Retina)</option>
+                                <option value="3">3x (Ultra HD)</option>
+                            </select>
+                        </div>
+                        <div id="export-info" class="export-info"></div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="file-input" multiple accept="image/*" style="display:none">
+    
+    <!-- Export modal -->
+    <div id="export-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Exportando...</h2>
+            </div>
+            <div class="modal-body">
+                <div class="export-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="export-progress-fill"></div>
+                    </div>
+                    <p id="export-status">Preparando exportação...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="editor.js"></script>
+</body>
+</html>
