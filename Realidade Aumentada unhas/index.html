@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>💅 Provador de Unhas AR</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💅</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>💅 Provador de Unhas <span>AR</span></h1>
+    <span class="badge" id="status">Pronto</span>
+  </header>
+
+  <main>
+    <!-- Área da câmera -->
+    <section class="palco">
+      <div class="video-wrap" id="videoWrap">
+        <video id="video" playsinline muted></video>
+        <canvas id="canvas"></canvas>
+        <div class="overlay-msg" id="overlayMsg">
+          <div class="big">👋</div>
+          <p>Clique em <b>Iniciar câmera</b> e mostre sua mão.</p>
+        </div>
+      </div>
+      <div class="acoes">
+        <button id="btnIniciar" class="btn primary">▶️ Iniciar câmera</button>
+        <button id="btnCapturar" class="btn" disabled>📸 Capturar</button>
+      </div>
+    </section>
+
+    <!-- Editor -->
+    <aside class="painel">
+      <h2>Editor</h2>
+
+      <div class="grupo">
+        <label>Cor</label>
+        <input type="color" id="cor" value="#e11d74" />
+        <div class="paleta" id="paleta"></div>
+      </div>
+
+      <div class="grupo">
+        <label>Formato</label>
+        <div class="formas" id="formas">
+          <button data-forma="quadrada" class="ativo">Quadrada</button>
+          <button data-forma="redonda">Redonda</button>
+          <button data-forma="amendoada">Amendoada</button>
+          <button data-forma="stiletto">Stiletto</button>
+        </div>
+      </div>
+
+      <div class="grupo">
+        <label>Comprimento <span id="vComprimento">1.00</span></label>
+        <input type="range" id="comprimento" min="0.7" max="2.2" step="0.05" value="1.0" />
+      </div>
+
+      <div class="grupo">
+        <label>Largura <span id="vLargura">1.0</span></label>
+        <input type="range" id="largura" min="0.6" max="1.6" step="0.05" value="1.0" />
+      </div>
+
+      <div class="grupo">
+        <label>Opacidade <span id="vOpacidade">95%</span></label>
+        <input type="range" id="opacidade" min="20" max="100" step="1" value="95" />
+      </div>
+
+      <div class="grupo toggles">
+        <label class="switch"><input type="checkbox" id="gloss" checked /> ✨ Brilho</label>
+        <label class="switch"><input type="checkbox" id="frances" /> 🤍 Francesinha</label>
+        <label class="switch"><input type="checkbox" id="glitter" /> 🌟 Glitter</label>
+        <label class="switch"><input type="checkbox" id="flash" /> 🔦 Flash</label>
+        <label class="switch"><input type="checkbox" id="espelhar" /> 🔁 Espelhar</label>
+        <label class="switch"><input type="checkbox" id="debug" /> 🐞 Pontos da mão</label>
+      </div>
+
+      <p class="dica">Dica: mão de frente, boa luz e fundo neutro melhoram a detecção. É um protótipo — dá a <b>noção</b> do resultado, não é foto real.</p>
+    </aside>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

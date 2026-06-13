@@ -1,0 +1,7 @@
+opencv-contrib-python>=4.9
+numpy
+pycaw
+comtypes
+keyboard
+pystray
+Pillow
